@@ -2,7 +2,7 @@ variables:
   IMAGE_NAME: gitlab-gke
   CLUSTER_ZONE: us-central1-b
   GCP_PROJECT_ID: pv-lb-test
-  CLUSTER_NAME: gitlab-gke
+  CLUSTER_NAME: kubernetes-testing-cluster
   
 services:
   - docker:dind
