@@ -6,5 +6,3 @@ tests:
   stage: test
   script:
     - python test.py
-  tags:
-    - docker
