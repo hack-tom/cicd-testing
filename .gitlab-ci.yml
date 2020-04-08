@@ -1,9 +1,5 @@
-stages:
-  - test
-
-tests:
-  image: "hack-tom/cicd-testing:latest"
-  stage: test
+py36_nose:
+  image: python:3.7
   script:
-    - $ docker login localhost:8080
-    - $ python test.py
+    - apt-get update -q -y
+    - python test.py
