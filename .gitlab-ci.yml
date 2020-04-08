@@ -36,9 +36,9 @@ publish-image:
     # Enable gcloud docker
     - google-cloud-sdk/bin/gcloud auth configure-docker
     # Create our image. Expected to create an image 'image_id'
-    - google-cloud-sdk/bin/gcloud docker -- build -t gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME
+    - docker build -t gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME
     # Optionally tag the image with the commit short-sha
-    - google-cloud-sdk/bin/gcloud docker -- push gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME:latest
+    - docker push gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME:latest
   tags:
     - docker
   only:
