@@ -39,8 +39,6 @@ publish-image:
     - google-cloud-sdk/bin/gcloud build --tag gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME
     # Optionally tag the image with the commit short-sha
     - google-cloud-sdk/bin/gcloud push gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME:latest
-    
-    
   tags:
     - docker
   only:
