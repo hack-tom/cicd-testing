@@ -24,7 +24,7 @@ publish-image:
   stage: publish
   script:
     # Install CA certs, openssl to https downloads, python for gcloud sdk
-    - apk add --update make ca-certificates openssl python
+    - RUN apk add --update make ca-certificates openssl python
     - update-ca-certificates
     # Write our GCP service account private key into a file
     - echo $GCLOUD_SERVICE_KEY | base64 -d > ${HOME}/gcloud-service-key.json
