@@ -24,8 +24,8 @@ publish-image:
   stage: publish
   script:
     # Install CA certs, openssl to https downloads, python for gcloud sdk
-    - apt-get --update make ca-certificates openssl python
-    - update-ca-certificates
+    - apt-get install make ca-certificates openssl python
+    - sudo update-ca-certificates
     # Write our GCP service account private key into a file
     - echo $GCLOUD_SERVICE_KEY | base64 -d > ${HOME}/gcloud-service-key.json
     # Download and install Google Cloud SDK
