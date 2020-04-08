@@ -5,4 +5,5 @@ tests:
   image: "hack-tom/cicd-testing:latest"
   stage: test
   script:
-    - python test.py
+    - $ docker login localhost:8080
+    - $ python test.py
