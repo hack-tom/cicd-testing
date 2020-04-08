@@ -21,11 +21,6 @@ stages:
 #  tags:
 #    - docker
 
-build-image:
-  stage: build
-  script:
-    -
-
 publish-image:
   stage: publish
   script:
