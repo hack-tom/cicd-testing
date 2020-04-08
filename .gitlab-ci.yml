@@ -24,7 +24,7 @@ publish-image:
   stage: publish
   script:
     # Install CA certs, openssl to https downloads, python for gcloud sdk
-    - apk add --update make ca-certificates openssl python
+    - apt-get --update make ca-certificates openssl python
     - update-ca-certificates
     # Write our GCP service account private key into a file
     - echo $GCLOUD_SERVICE_KEY | base64 -d > ${HOME}/gcloud-service-key.json
@@ -41,7 +41,6 @@ publish-image:
     - docker tag $IMAGE_NAME gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME:$(echo $CI_COMMIT_SHA | cut -c1-8)
     - google-cloud-sdk/bin/gcloud docker -- push gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME:latest
     - google-cloud-sdk/bin/gcloud docker -- push gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME:$(echo $CI_COMMIT_SHA | cut -c1-8)
-  # Only run builds for these refs
   tags:
     - docker
   only:
