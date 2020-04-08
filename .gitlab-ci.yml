@@ -6,7 +6,7 @@ variables:
   IMAGE_NAME: hack-tom/cicd-testing-273606:v1.0
 
 services:
-- docker:dind
+- docker:apline:3.11.5
 
 stages:
   - test
