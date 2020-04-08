@@ -42,5 +42,7 @@ publish-image:
     - google-cloud-sdk/bin/gcloud docker -- push gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME:latest
     - google-cloud-sdk/bin/gcloud docker -- push gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME:$(echo $CI_COMMIT_SHA | cut -c1-8)
   # Only run builds for these refs
+  tags:
+    - docker
   only:
     - master
