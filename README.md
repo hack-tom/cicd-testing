@@ -9,3 +9,7 @@ This project is for testing of the following concepts:
 5) Automation of build & deploy of docker containers
 
 Hopefully if I can achieve the above, I'll gain a much better understanding of CICD Pipelines, containerization, and cloud deployment.
+
+## Notes
+
+For a test to fail, the code itself must fail - there can't be try:except in the test cases, it has to actually break the program to cause a CI fail condition
