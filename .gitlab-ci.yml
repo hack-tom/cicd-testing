@@ -10,7 +10,6 @@ services:
 
 stages:
 #  - test
-  - build
   - publish
 
 #tests:
