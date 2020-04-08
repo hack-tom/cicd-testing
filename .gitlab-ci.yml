@@ -9,22 +9,22 @@ services:
 - docker:apline:3.11.5
 
 stages:
-  - test
+#  - test
   - publish
 
-tests:
-  image: python:3.7
-  stage: test
-  script:
-    - python test.py
-  tags:
-    - docker
+#tests:
+#  image: python:3.7
+#  stage: test
+#  script:
+#    - python test.py
+#  tags:
+#    - docker
 
 publish-image:
   stage: publish
   script:
     # Install CA certs, openssl to https downloads, python for gcloud sdk
-    - RUN apk add --update make ca-certificates openssl python
+    - apk add --update make ca-certificates openssl python
     - update-ca-certificates
     # Write our GCP service account private key into a file
     - echo $GCLOUD_SERVICE_KEY | base64 -d > ${HOME}/gcloud-service-key.json
