@@ -12,4 +12,4 @@ Hopefully if I can achieve the above, I'll gain a much better understanding of C
 
 ## Notes
 
-For a test to fail, the code itself must fail - there can't be try:except in the test cases, it has to actually break the program to cause a CI fail condition
+For a test to fail, the code itself must fail - there can't be try:except in the test cases, it has to actually break the program to cause a CI fail condition. *Edit* Can confirm this is correct, see failed pipeline on cicd-testing/intentional-ci-fail branch.
