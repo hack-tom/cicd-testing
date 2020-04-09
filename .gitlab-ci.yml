@@ -26,10 +26,8 @@ publish-image:
   script:
     - docker build -t gcr.io/${GCP_PROJECT_ID}/data_service:v1 .
     - docker build -t gcr.io/${GCP_PROJECT_ID}/api_service:v1 .
-    - google-cloud-sdk/bin/gcloud auth login
     - docker push gcr.io/${GCP_PROJECT_ID}/data_service:v1
     - docker push gcr.io/${GCP_PROJECT_ID}/api_service:v1
-    - google-cloud-sdk/bin/gcloud container clusters create mediumtuts-cluster --num-nodes=2 --zone=us-central1-b
     - kubectl  run dataservice --image=gcr.io/${GCP_PROJECT_ID}/data_service:v1 --port 80
     - kubectl  run apiservice --image=gcr.io/${GCP_PROJECT_ID}/api_service:v1 --port 80
     - kubectl  expose deployment dataservice --type=ClusterIP
