@@ -27,5 +27,3 @@ publish-image:
   stage: publish
   script:
     - docker build -t my-docker-image .
-  only:
-    master
