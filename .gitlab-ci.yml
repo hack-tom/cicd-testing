@@ -6,10 +6,10 @@ variables:
   IMAGE_NAME: hack-tom/cicd-testing-273606:v1.0
   VERSION: v1.0
 
-image: gitlab/dind
+image: docker:git
 
 services:
-  - docker:dind
+- docker:dind
   
 stages:
 #  - test
