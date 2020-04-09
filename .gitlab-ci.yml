@@ -9,7 +9,7 @@ variables:
 image: docker:git
 
 services:
-- docker:dind
+  - docker:dind
   
 stages:
 #  - test
@@ -34,18 +34,24 @@ build-image:
     paths:
       - image
 
-
 run-image:
   stage: run
   script:
     - docker load -i image/app.tar
     - docker run --name app -d -p 5000:5000 -t gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME} .
+  artifacts:
+    paths:
+      - image
     
 publish-image:
   stage: publish
   script:
-    - docker build -t gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME}:${VERSION} .
+    - docker load -i image/app.tar
+    - docker build --name app  -t gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME}:${VERSION} .
     - docker push gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME}:${VERSION}
+  artifacts:
+    paths:
+      - image
 #    - kubectl  run dataservice --image=gcr.io/${GCP_PROJECT_ID}/data_service:v1 --port 80
 #    - kubectl  run apiservice --image=gcr.io/${GCP_PROJECT_ID}/api_service:v1 --port 80
 #    - kubectl  expose deployment dataservice --type=ClusterIP
