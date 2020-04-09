@@ -9,3 +9,6 @@ RUN pip install -r /tmp/requirements.txt
 
 # copy over our app code
 COPY ./app /app
+
+# open port on the container
+EXPOSE 8080
