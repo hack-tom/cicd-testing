@@ -17,12 +17,12 @@ stages:
   - run
 #  - publish
 
-tests:
-  stage: test
-  script:
-    - python test.py
-  tags:
-    - docker
+#tests:
+#  stage: test
+#  script:
+#    - python test.py
+#  tags:
+#    - docker
 
 build-image:
   stage: build
@@ -33,17 +33,17 @@ build-image:
 build-run:
   stage: run
   script:
-    - docker run -p 5000:5000 -t gcr.io/${GCP_PROJECT_ID}/data_service:${VERSION} .
-    - docker run -p 5000:5000 -t gcr.io/${GCP_PROJECT_ID}/api_service:${VERSION} .
+    - docker run -d -p 5000:5000 -t gcr.io/${GCP_PROJECT_ID}/data_service:${VERSION} .
+    - docker run -d -p 5000:5000 -t gcr.io/${GCP_PROJECT_ID}/api_service:${VERSION} .
 
-publish-image:
-  stage: publish
-  script:
-    - docker build -t gcr.io/${GCP_PROJECT_ID}/data_service:v1 .
-    - docker build -t gcr.io/${GCP_PROJECT_ID}/api_service:v1 .
-    - docker push gcr.io/${GCP_PROJECT_ID}/data_service:v1
-    - docker push gcr.io/${GCP_PROJECT_ID}/api_service:v1
-    - kubectl  run dataservice --image=gcr.io/${GCP_PROJECT_ID}/data_service:v1 --port 80
-    - kubectl  run apiservice --image=gcr.io/${GCP_PROJECT_ID}/api_service:v1 --port 80
-    - kubectl  expose deployment dataservice --type=ClusterIP
-    - kubectl  expose deployment apiservice --type=LoadBalancer
+#publish-image:
+#  stage: publish
+#  script:
+#    - docker build -t gcr.io/${GCP_PROJECT_ID}/data_service:v1 .
+#    - docker build -t gcr.io/${GCP_PROJECT_ID}/api_service:v1 .
+#    - docker push gcr.io/${GCP_PROJECT_ID}/data_service:v1
+#    - docker push gcr.io/${GCP_PROJECT_ID}/api_service:v1
+#    - kubectl  run dataservice --image=gcr.io/${GCP_PROJECT_ID}/data_service:v1 --port 80
+#    - kubectl  run apiservice --image=gcr.io/${GCP_PROJECT_ID}/api_service:v1 --port 80
+#    - kubectl  expose deployment dataservice --type=ClusterIP
+#    - kubectl  expose deployment apiservice --type=LoadBalancer

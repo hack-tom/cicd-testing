@@ -12,3 +12,7 @@ COPY ./app /app
 
 # open port on the container
 EXPOSE 8080
+
+# run app
+ENTRYPOINT [ "python" ]
+CMD [ "main.py" ]
