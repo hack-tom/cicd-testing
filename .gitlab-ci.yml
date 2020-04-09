@@ -23,16 +23,16 @@ tests:
 
 before_script:
   script:
-    - apt-get update
-    - apt-get install python-dev python-pip git docker.io
+    - "apt-get update"
+    - "apt-get install python-dev python-pip git docker.io"
 
 build-image:
   stage: build
   script:
-    - docker build -t cicd-testing .
-    - docker images
+    - "docker build -t cicd-testing ."
+    - "docker images"
 
 publish-image:
   stage: publish
   script:
-    - docker run -p 80:80 -t cicd-testing
+    - "docker run -p 80:80 -t cicd-testing"
