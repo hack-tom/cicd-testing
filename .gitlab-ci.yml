@@ -20,12 +20,12 @@ tests:
   tags:
     - docker
 
+before_script:
+  - docker info
+
 publish-image:
   stage: publish
   script:
-    - docker build -t $IMAGE_NAME dockerfiles/
-    - docker run gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME
-    - docker tag gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME
-    - docker push gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME:latest
+    - docker build -t my-docker-image .
   only:
     master
