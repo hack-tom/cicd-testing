@@ -29,13 +29,22 @@ build-image:
   script:
     - docker build -t gcr.io/${GCP_PROJECT_ID}/data_service:${VERSION} .
     - docker build -t gcr.io/${GCP_PROJECT_ID}/api_service:${VERSION} .
+    - mkdir image
+    - docker save gcr.io/${GCP_PROJECT_ID}/data_service:${VERSION} > image/data_service.tar
+    - docker save gcr.io/${GCP_PROJECT_ID}/api_service:${VERSION} > image/api_service.tar
+  artifacts:
+    paths:
+      - image
+
 
 run-image:
   stage: run
   script:
-    - docker run -d -p 5000:5000 -t gcr.io/${GCP_PROJECT_ID}/data_service:${VERSION} .
-    - docker run -d -p 5000:5000 -t gcr.io/${GCP_PROJECT_ID}/api_service:${VERSION} .
-
+    - docker load -i image/data_service.tar
+    - docker run --name data_service -d -p 5000:5000 -t gcr.io/${GCP_PROJECT_ID}/data_service:${VERSION} .
+    - docker load -i image/api_service.tar
+    - docker run --name api_service -d -p 5000:5000 -t gcr.io/${GCP_PROJECT_ID}/api_service:${VERSION} .
+    
 #publish-image:
 #  stage: publish
 #  script:
