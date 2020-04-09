@@ -5,16 +5,16 @@ variables:
   GCP_PROJECT_ID: cicd-testing-273606
   IMAGE_NAME: hack-tom/cicd-testing-273606:v1.0
 
-services:
-- docker:apline:3.11.5
+image: gitlab/dind
 
+services:
+  - docker:dind
 stages:
 #  - test
   - build
   - publish
 
 #tests:
-#  image: python:3.7
 #  stage: test
 #  script:
 #    - python test.py
