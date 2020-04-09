@@ -27,3 +27,5 @@ publish-image:
     - docker run gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME
     - docker tag gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME
     - docker push gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME:latest
+  only:
+    master
