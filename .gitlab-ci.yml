@@ -21,10 +21,6 @@ stages:
 #  tags:
 #    - docker
 
-before_script:
-  - "apt-get update"
-  - "apt-get install python-dev python-pip git docker.io"
-
 build-image:
   stage: build
   script:
