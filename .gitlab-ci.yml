@@ -10,6 +10,7 @@ services:
 
 stages:
   - test
+  - build
   - publish
 
 tests:
@@ -21,9 +22,17 @@ tests:
     - docker
 
 before_script:
-  - docker info
+  script:
+    - apt-get update
+    - apt-get install python-dev python-pip git docker.io
+
+build-image:
+  stage: build
+  script:
+    - docker build -t cicd-testing .
+    - docker images
 
 publish-image:
   stage: publish
   script:
-    - docker build -t my-docker-image .
+    - docker run -p 80:80 -t cicd-testing

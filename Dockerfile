@@ -1,3 +1,11 @@
-export PROJECT_ID=cicd-testing-273606
+FROM tiangolo/uwsgi-nginx-flask:python3.6
 
-docker build -t gcr.io/${PROJECT_ID}/cicd-testing:v1 .
+# copy over our requirements.txt file
+COPY requirements.txt /tmp/
+
+# upgrade pip and install required python packages
+RUN pip install -U pip
+RUN pip install -r /tmp/requirements.txt
+
+# copy over our app code
+COPY ./app /app
