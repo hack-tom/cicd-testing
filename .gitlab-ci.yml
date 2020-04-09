@@ -9,37 +9,21 @@ services:
 - docker:apline:3.11.5
 
 stages:
-#  - test
+  - test
   - publish
 
-#tests:
-#  image: python:3.7
-#  stage: test
-#  script:
-#    - python test.py
-#  tags:
-#    - docker
+tests:
+  image: python:3.7
+  stage: test
+  script:
+    - python test.py
+  tags:
+    - docker
 
 publish-image:
   stage: publish
   script:
-    # Install CA certs, openssl to https downloads, python for gcloud sdk
-    - apt-get install make ca-certificates openssl python
-    - update-ca-certificates
-    # Write our GCP service account private key into a file
-    - echo $GCLOUD_SERVICE_KEY | base64 -d > ${HOME}/gcloud-service-key.json
-    # Download and install Google Cloud SDK
-    - wget https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz
-    - tar zxvf google-cloud-sdk.tar.gz && ./google-cloud-sdk/install.sh --usage-reporting=false --path-update=true
-    - google-cloud-sdk/bin/gcloud --quiet components update
-    - google-cloud-sdk/bin/gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
-    # Enable gcloud docker
-    - google-cloud-sdk/bin/gcloud auth configure-docker
-    # Create our image. Expected to create an image 'image_id'#
-    - google-cloud-sdk/bin/gcloud builds --tag gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME
-    # Optionally tag the image with the commit short-sha
-    - google-cloud-sdk/bin/gcloud builds push gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME:latest
-  tags:
-    - docker
-  only:
-    - master
+    - docker build -t $IMAGE_NAME dockerfiles/
+    - docker run gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME
+    - docker tag gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME
+    - docker push gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME:latest
