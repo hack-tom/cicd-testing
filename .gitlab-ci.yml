@@ -3,7 +3,7 @@
 variables:
   DOCKER_DRIVER: overlay
   GCP_PROJECT_ID: cicd-testing-273606
-  IMAGE_NAME: hack-tom/cicd-testing-273606:v1.0
+  IMAGE_NAME: cicd-testing-273606:v1.0
   VERSION: v1.0
 
 image: docker:git
@@ -27,11 +27,9 @@ stages:
 build-image:
   stage: build
   script:
-    - docker build -t gcr.io/${GCP_PROJECT_ID}/data_service:${VERSION} .
-    - docker build -t gcr.io/${GCP_PROJECT_ID}/api_service:${VERSION} .
+    - docker build -t gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME} .
     - mkdir image
-    - docker save gcr.io/${GCP_PROJECT_ID}/data_service:${VERSION} > image/data_service.tar
-    - docker save gcr.io/${GCP_PROJECT_ID}/api_service:${VERSION} > image/api_service.tar
+    - docker save gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME} > image/app.tar
   artifacts:
     paths:
       - image
@@ -40,18 +38,14 @@ build-image:
 run-image:
   stage: run
   script:
-    - docker load -i image/data_service.tar
-    - docker run --name data_service -d -p 5000:5000 -t gcr.io/${GCP_PROJECT_ID}/data_service:${VERSION} .
-    - docker load -i image/api_service.tar
-    - docker run --name api_service -d -p 5000:5000 -t gcr.io/${GCP_PROJECT_ID}/api_service:${VERSION} .
+    - docker load -i image/app.tar
+    - docker run --name app -d -p 5000:5000 -t gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME} .
     
-#publish-image:
-#  stage: publish
-#  script:
-#    - docker build -t gcr.io/${GCP_PROJECT_ID}/data_service:v1 .
-#    - docker build -t gcr.io/${GCP_PROJECT_ID}/api_service:v1 .
-#    - docker push gcr.io/${GCP_PROJECT_ID}/data_service:v1
-#    - docker push gcr.io/${GCP_PROJECT_ID}/api_service:v1
+publish-image:
+  stage: publish
+  script:
+    - docker build -t gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME}:${VERSION} .
+    - docker push gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME}:${VERSION}
 #    - kubectl  run dataservice --image=gcr.io/${GCP_PROJECT_ID}/data_service:v1 --port 80
 #    - kubectl  run apiservice --image=gcr.io/${GCP_PROJECT_ID}/api_service:v1 --port 80
 #    - kubectl  expose deployment dataservice --type=ClusterIP
