@@ -30,7 +30,7 @@ build-image:
     - docker build -t gcr.io/${GCP_PROJECT_ID}/data_service:${VERSION} .
     - docker build -t gcr.io/${GCP_PROJECT_ID}/api_service:${VERSION} .
 
-build-run:
+run-image:
   stage: run
   script:
     - docker run -d -p 5000:5000 -t gcr.io/${GCP_PROJECT_ID}/data_service:${VERSION} .
