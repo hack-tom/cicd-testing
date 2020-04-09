@@ -26,6 +26,7 @@ publish-image:
   script:
     - docker build -t gcr.io/${GCP_PROJECT_ID}/data_service:v1 .
     - docker build -t gcr.io/${GCP_PROJECT_ID}/api_service:v1 .
+    - gcloud auth login
     - docker push gcr.io/${GCP_PROJECT_ID}/data_service:v1
     - docker push gcr.io/${GCP_PROJECT_ID}/api_service:v1
     - gcloud container clusters create mediumtuts-cluster --num-nodes=2 --zone=us-central1-b
