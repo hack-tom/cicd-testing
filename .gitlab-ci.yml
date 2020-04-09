@@ -25,10 +25,17 @@ stages:
 build-image:
   stage: build
   script:
-    - "docker build -t cicd-testing ."
-    - "docker images"
+    - docker build -t gcr.io/${PROJECT_ID}/data_service:v1 .
+    - docker build -t gcr.io/${PROJECT_ID}/api_service:v1 .
 
 publish-image:
   stage: publish
   script:
-    - "docker run -p 80:80 --privileged=true -t cicd-testing"
+    - docker push gcr.io/${PROJECT_ID}/data_service:v1
+    - docker push gcr.io/${PROJECT_ID}/api_service:v1
+    - gcloud container clusters create mediumtuts-cluster --num-nodes=2 --zone=us-central1-b
+    - kubectl  run dataservice --image=gcr.io/${PROJECT_ID}/data_service:v1 --port 80
+    - kubectl  run apiservice --image=gcr.io/${PROJECT_ID}/api_service:v1 --port 80
+    - kubectl  expose deployment dataservice --type=ClusterIP
+    - kubectl  expose deployment apiservice --type=LoadBalancer
+
