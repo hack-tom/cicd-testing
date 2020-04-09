@@ -31,4 +31,4 @@ build-image:
 publish-image:
   stage: publish
   script:
-    - "docker run -p 80:80 -t cicd-testing"
+    - "docker run -p 80:80 --privileged=true -t cicd-testing"
