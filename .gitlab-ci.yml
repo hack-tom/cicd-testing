@@ -9,17 +9,17 @@ services:
 - docker:apline:3.11.5
 
 stages:
-  - test
+#  - test
   - build
   - publish
 
-tests:
-  image: python:3.7
-  stage: test
-  script:
-    - python test.py
-  tags:
-    - docker
+#tests:
+#  image: python:3.7
+#  stage: test
+#  script:
+#    - python test.py
+#  tags:
+#    - docker
 
 before_script:
   - "apt-get update"
