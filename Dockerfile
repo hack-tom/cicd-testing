@@ -14,5 +14,5 @@ COPY ./app /app
 EXPOSE 8080
 
 # run app
-ENTRYPOINT [ "python" ]
-CMD [ "main.py" ]
+CMD export FLASK_APP=app
+CMD flask run
