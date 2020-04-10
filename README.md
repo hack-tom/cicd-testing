@@ -26,3 +26,4 @@ After that, I'll improve the pre-build tests for the application, perhaps add in
 3) From the google cloud platform, establish a function to pull that container to the gke cluster
 4) Run the container on the cluster
 *EDIT* Turns out you can work around the assumption by using [this thing called gke-deploy](https://cloud.google.com/cloud-build/docs/deploying-builds/deploy-gke) which seems to explain how to do this from build from the safety of your own repo config files.
+*New Edit* I've followed [this docmentaton on mirroring to google's cloud source repository](https://cloud.google.com/solutions/mirroring-gitlab-repositories-to-cloud-source-repositories) to make the deploying easier.
