@@ -1,0 +1,16 @@
+variables:
+  DOCKER_DRIVER: overlay
+  GCP_PROJECT_ID: cicd-testing-273606
+  IMAGE_NAME: cicd-testing-273606:v1.0
+  VERSION: latest
+
+steps:
+...
+# deploy container image to GKE
+- name: "gcr.io/cloud-builders/gke-deploy"
+  args:
+  - run
+  - --filename=kubernetes-config-file
+  - --image=gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME}
+  - --location=$europe-west3-b
+  - --cluster=kubernetes-testing-cluster
