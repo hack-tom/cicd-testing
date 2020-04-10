@@ -3,7 +3,7 @@
 variables:
   DOCKER_DRIVER: overlay
   GCP_PROJECT_ID: cicd-testing-273606
-  IMAGE_NAME: cicd-testing-273606:v1.0
+  IMAGE_NAME: cicd-testing-273606:latest
   VERSION: v1.0
 
 image: docker:git
