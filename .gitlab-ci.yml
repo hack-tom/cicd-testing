@@ -42,13 +42,7 @@ run-image:
   artifacts:
     paths:
       - image
-    
-publish-image:
-  stage: publish
-  image: gcr.io/cloud-builders/gke-deploy
-  script:
-    - run --filename=kubernetes/configuration.yaml --location=europe-west3-b --cluster=kubernetes-testing-cluster
-    - google-cloud-sdk/bin/gcloud builds submit --project=gcr.io/${GCP_PROJECT_ID} --config cloudbuild.yaml
+      
 #  artifacts:
  #   paths:
   #    - image
