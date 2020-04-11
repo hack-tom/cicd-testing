@@ -54,5 +54,5 @@ stop_review:
     - ./teardown-environment
   when: manual
   environment:
-    name: review/$CI_COMMIT_REF_SLUG
+    name: $KUBE_NAMESPACE
     action: stop
