@@ -44,8 +44,15 @@ run-image:
   environment:
     name: $KUBE_NAMESPACE
     url: 35.246.199.187.nip.io
-  tags:
+    on_stop: stop_review
   artifacts:
     paths:
       - image
-    
+      
+stop_review:
+  script:
+    - ./teardown-environment
+  when: manual
+  environment:
+    name: review/$CI_COMMIT_REF_SLUG
+    action: stop
