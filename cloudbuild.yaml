@@ -6,6 +6,14 @@ variables:
 
 steps:
 ...
+#tests
+- name: test
+  args:
+    - python test.py
+- name: build
+  args:
+    - docker build -t gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME} .
+    - docker push gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME} 
 # deploy container image to GKE
 - name: "gcr.io/cloud-builders/gke-deploy"
   args:
