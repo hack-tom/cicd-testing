@@ -44,15 +44,6 @@ run-image:
   environment:
     name: kubernetes-testing-cluster
     url: 35.246.199.187.nip.io
-    on_stop: stop_review
   artifacts:
     paths:
       - image
-      
-stop_review:
-  script:
-    - ./teardown-environment
-  when: manual
-  environment:
-    name: kubernetes-testing-cluster
-    action: stop
