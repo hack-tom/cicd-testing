@@ -44,6 +44,8 @@ run-image:
   environment:
     name: kubernetes-testing-cluster
     url: 35.246.199.187.nip.io
+    kubernetes:
+        namespace: kubernetes-testing-cluster
   artifacts:
     paths:
       - image
