@@ -2,35 +2,37 @@
 apiVersion: "apps/v1"
 kind: "Deployment"
 metadata:
-  name: "nginx-1"
+  name: "cicd-testing"
   namespace: "default"
   labels:
-    app: "nginx-1"
+    app: "cicd-testing"
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: "nginx-1"
+      app: "cicd-testing"
   template:
     metadata:
       labels:
-        app: "nginx-1"
+        app: "cicd-testing"
     spec:
       containers:
       - name: "cicd-testing-273606-1"
         image: "gcr.io/cicd-testing-273606/cicd-testing-273606:latest"
+        ports:
+        - containerPort: 80
 ---
 apiVersion: "autoscaling/v2beta1"
 kind: "HorizontalPodAutoscaler"
 metadata:
-  name: "nginx-1-hpa-hnwz"
+  name: "cicd-testing-hpa-hnwz"
   namespace: "default"
   labels:
-    app: "nginx-1"
+    app: "cicd-testing"
 spec:
   scaleTargetRef:
     kind: "Deployment"
-    name: "nginx-1"
+    name: "cicd-testing"
     apiVersion: "apps/v1"
   minReplicas: 1
   maxReplicas: 5
