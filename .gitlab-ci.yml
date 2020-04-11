@@ -42,7 +42,7 @@ run-image:
     #- kubectl  run app --image=gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME} --port 5000
     #- kubectl  expose deployment app --type=ClusterIP  
   environment:
-    name: $KUBE_NAMESPACE
+    name: kubernetes-testing-cluster
     url: 35.246.199.187.nip.io
     on_stop: stop_review
   artifacts:
@@ -54,5 +54,5 @@ stop_review:
     - ./teardown-environment
   when: manual
   environment:
-    name: $KUBE_NAMESPACE
+    name: kubernetes-testing-cluster
     action: stop
