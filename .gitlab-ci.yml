@@ -15,7 +15,7 @@ stages:
 #  - test
   - build
   - run
-#  - publish
+  - publish
 
 #tests:
 #  stage: test
