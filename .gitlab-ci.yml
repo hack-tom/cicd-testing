@@ -43,15 +43,15 @@ run-image:
     paths:
       - image
     
-#publish-image:
-#  stage: publish
-#  script:
-#    - docker load -i image/app.tar
-#    - docker build --name app  -t gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME}:${VERSION} .
-#    - docker push gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME}:${VERSION}
+publish-image:
+  stage: publish
+  image: gcr.io/cloud-builders/gke-deploy
+  script:
+    - run --filename=kubernetes/configuration.yaml --location=europe-west3-b --cluster=kubernetes-testing-cluster
+    - google-cloud-sdk/bin/gcloud builds submit --project=gcr.io/${GCP_PROJECT_ID} --config cloudbuild.yaml
 #  artifacts:
-#    paths:
-#      - image
+ #   paths:
+  #    - image
 #    - kubectl  run dataservice --image=gcr.io/${GCP_PROJECT_ID}/data_service:v1 --port 80
 #    - kubectl  run apiservice --image=gcr.io/${GCP_PROJECT_ID}/api_service:v1 --port 80
 #    - kubectl  expose deployment dataservice --type=ClusterIP
