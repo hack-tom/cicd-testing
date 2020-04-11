@@ -1,13 +1,5 @@
 steps:
 ...
-#tests
-- name: test
-  args:
-    - python test.py
-- name: build
-  args:
-    - docker build -t gcr.io/cicd-testing-273606/cicd-testing .
-    - docker push gcr.io/cicd-testing-273606/cicd-testing 
 # deploy container image to GKE
 - name: "gcr.io/cloud-builders/gke-deploy"
   args:
