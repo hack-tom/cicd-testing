@@ -36,13 +36,17 @@ build-image:
 
 run-image:
   stage: run
-  script:
-    - docker load -i image/app.tar
-    - docker run --name app -d -p 80:80 -t gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME} .
-    - kubectl  run cicd-testing --image=gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME} --port 5000
-    - kubectl  expose deployment cicd-testing --type=ClusterIP
-
-  artifacts:
-    paths:
-      - image
+  script: make deploy
+  environment:
+    name: production
+    url: 35.246.199.187.nip.io
+#  script:
+#    - docker load -i image/app.tar
+#    - docker run --name app -d -p 80:80 -t gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME} .
+#
+ #   - kubectl  run cicd-testing --image=gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME} --port 5000
+  #  - kubectl  expose deployment cicd-testing --type=ClusterIP
+  #artifacts:
+   # paths:
+    #  - image
     
