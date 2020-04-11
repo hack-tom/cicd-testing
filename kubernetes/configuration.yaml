@@ -20,7 +20,7 @@ spec:
       - name: "cicd-testing-273606-1"
         image: "gcr.io/cicd-testing-273606/cicd-testing-273606:latest"
         ports:
-        - containerPort: 80
+        - containerPort: 5000
 ---
 apiVersion: "autoscaling/v2beta1"
 kind: "HorizontalPodAutoscaler"

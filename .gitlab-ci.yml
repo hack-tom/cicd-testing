@@ -38,15 +38,11 @@ run-image:
   stage: run
   script:
     - docker load -i image/app.tar
-    - docker run --name app -d -p 5000:5000 -t gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME} .
+    - docker run --name app -d -p 80:80 -t gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME} .
+    - kubectl  run cicd-testing --image=gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME} --port 5000
+    - kubectl  expose deployment cicd-testing --type=ClusterIP
+
   artifacts:
     paths:
       - image
-      
-#  artifacts:
- #   paths:
-  #    - image
-#    - kubectl  run dataservice --image=gcr.io/${GCP_PROJECT_ID}/data_service:v1 --port 80
-#    - kubectl  run apiservice --image=gcr.io/${GCP_PROJECT_ID}/api_service:v1 --port 80
-#    - kubectl  expose deployment dataservice --type=ClusterIP
-#    - kubectl  expose deployment apiservice --type=LoadBalancer
+    
