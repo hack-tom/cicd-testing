@@ -6,13 +6,13 @@ steps:
     - python test.py
 - name: build
   args:
-    - docker build -t gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME} .
-    - docker push gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME} 
+    - docker build -t gcr.io/cicd-testing-273606/cicd-testing .
+    - docker push gcr.io/cicd-testing-273606/cicd-testing 
 # deploy container image to GKE
 - name: "gcr.io/cloud-builders/gke-deploy"
   args:
   - run
   - --filename=kubernetes-config-file
-  - --image=gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME}
-  - --location=$europe-west3-b
+  - --image=gcr.io/cicd-testing-273606/cicd-testing
+  - --location=europe-west3-b
   - --cluster=kubernetes-testing-cluster
