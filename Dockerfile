@@ -11,7 +11,7 @@ RUN pip install -r /tmp/requirements.txt
 COPY ./app /app
 
 # open port on the container
-EXPOSE 8080
+EXPOSE 5000
 
 # run app
 CMD export FLASK_APP=app
