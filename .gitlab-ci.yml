@@ -41,6 +41,7 @@ run-image:
   stage: run
   script: 
     - docker load -i image/app.tar
+    - docker push -t gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME}
     - docker run --expose=5000 --detach gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME} .
     - docker ps
     - docker ps -a
