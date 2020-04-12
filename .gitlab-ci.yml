@@ -41,7 +41,7 @@ run-image:
   stage: run
   script: 
     - docker load -i image/app.tar
-    - docker run gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME} -e DOMAIN=kubernetes-testing-cluster -d -p 5000:5000 .
+    - docker run gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME} -d -p 5000:5000 .
     - docker ps
     - kubectl  run --image=gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME} --port 5000
     #- kubectl  expose deployment app --type=ClusterIP  
