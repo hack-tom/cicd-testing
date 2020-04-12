@@ -39,7 +39,6 @@ build-image:
 
 run-image:
   stage: run
-  image: google/cloud-sdk
   script: 
     - docker load -i image/app.tar
     - docker run app -e DOMAIN=kubernetes-testing-cluster -d -p 5000:5000 -t gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME} .
