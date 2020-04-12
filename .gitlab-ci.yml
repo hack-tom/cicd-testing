@@ -6,10 +6,13 @@ variables:
   IMAGE_NAME: cicd-testing-273606:latest
   VERSION: v1.0
 
-image: docker:git
+image: google/cloud-sdk
 
 services:
   - docker:dind
+ 
+before_script:
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
  
 stages:
 #  - test
@@ -36,11 +39,12 @@ build-image:
 
 run-image:
   stage: run
+  image: google/cloud-sdk
   script: 
     - docker load -i image/app.tar
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker run app -e DOMAIN=kubernetes-testing-cluster -d -p 5000:5000 -t gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME} .
-    #- kubectl  run app --image=gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME} --port 5000
+    - docker ps
+    - kubectl  run app --image=gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME} --port 5000
     #- kubectl  expose deployment app --type=ClusterIP  
   environment:
     name: kubernetes-testing-cluster
