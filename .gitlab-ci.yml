@@ -44,7 +44,7 @@ run-image:
     #- kubectl  expose deployment app --type=ClusterIP  
   environment:
     name: kubernetes-testing-cluster
-    url: 35.246.199.187.nip.io
+    url: 35.193.216.125.nip.io
     kubernetes:
         namespace: kubernetes-testing-cluster
   artifacts:
