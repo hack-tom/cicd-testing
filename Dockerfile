@@ -10,6 +10,10 @@ RUN pip install -r /tmp/requirements.txt
 # copy over our app code
 COPY ./app /app
 
+# entrypoint.sh
+COPY entrypoint.sh /usr/local/bin/
+ENTRYPOINT ["docker-entrypoint.sh"]
+
 # open port on the container
 EXPOSE 5000
 
