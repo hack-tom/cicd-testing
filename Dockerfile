@@ -11,9 +11,9 @@ RUN pip install -r /tmp/requirements.txt
 COPY ./app /app
 
 # entrypoint.sh
-COPY entrypoint.sh /tmp/
-RUN chmod +x "/tmp/entrypoint.sh"
-ENTRYPOINT ["tmp/entrypoint.sh"]
+COPY entrypoint.sh /bin/
+RUN chmod +x "/bin/entrypoint.sh"
+ENTRYPOINT ["/bin/entrypoint.sh"]
 
 # open port on the container
 EXPOSE 5000
