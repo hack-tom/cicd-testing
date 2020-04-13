@@ -36,7 +36,7 @@ run-image:
   stage: run
   script: 
     - docker pull $DOCKER_IMAGE_NAME
-    - docker run --entrypoint="/bin/bash" -d --expose=5000 $DOCKER_IMAGE_NAME
+    - docker run --name=$DOCKER_IMAGE_NAME --entrypoint="/bin/bash" -d --expose=5000 $DOCKER_IMAGE_NAME
     - docker ps
     - docker exec $DOCKER_IMAGE_NAME "export FLASK_APP=app && flask run"
     #- kubectl run --image=gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME} --port 5000
