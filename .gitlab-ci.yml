@@ -2,8 +2,8 @@
 # improved performance.
 variables:
   DOCKER_DRIVER: overlay
-  GCP_PROJECT_ID: cicd-testing-273606
-  IMAGE_NAME: cicd-testing-273606:latest
+  GCP_PROJECT_ID: stoked-mode-274115
+  IMAGE_NAME: cicd-testing:latest
   VERSION: v1.0
 
 image: docker:git
