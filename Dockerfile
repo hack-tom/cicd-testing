@@ -9,6 +9,7 @@ RUN pip install -r /tmp/requirements.txt
 
 # copy over our app code
 COPY ./app /app
+COPY entrypoint.sh /usr/local/bin/
 
 # set entrypoint to app
 ENTRYPOINT ["entrypoint.sh"]
