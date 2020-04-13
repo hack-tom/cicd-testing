@@ -1,18 +1,13 @@
-# When using dind, it's wise to use the overlayfs driver for
-# improved performance.
-variables:
-  DOCKER_DRIVER: overlay2
-  DOCKER_HOST: tcp://docker:2375/
-  DOCKER_IMAGE_NAME: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$CI_COMMIT_SHORT_SHA
-
 image: docker:git
 
-before_script:
-  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+variables:
+  GCP_PROJECT_ID: cicd-testing-project
+  GCP_PRODUCTION_CLUSTER_ZONE: europe-west1-b
+  GOOGLE_CLOUD_ACCOUNT: $GCLOUD_SERVICE_KEY
+  IMAGE_BASE_TAG: $CI_PROJECT_TITLE-$CI_COMMIT_REF_SLUG
+  IMAGE_TAG: $CI_PROJECT_TITLE-$CI_COMMIT_REF_SLUG:$CI_COMMIT_SHORT_SHA
+  GCP_PRODUCTION_CLUSTER_NAME: $CI_PROJECT_TITLE-$CI_COMMIT_REF_SLUG
 
-services:
-  - docker:dind
- 
 stages:
 #  - test
   - build
@@ -25,24 +20,36 @@ stages:
 #  tags:
 #    - docker
 
-build-image:
+build:
   stage: build
+  image: google/cloud-sdk
+  services:
+  - docker:dind
+  before_script:
+    - echo $IMAGE_TAG
+    - export DOCKER_HOST="tcp://docker:2375"
+    - cat service_account.json | docker login -u _json_key --password-stdin https://eu.gcr.io
   script:
-    - docker build -t $DOCKER_IMAGE_NAME .
-    - docker push $DOCKER_IMAGE_NAME
+    - gcloud auth activate-service-account --key-file service_account.json
+    - gcloud auth configure-docker
+    - docker build -t gcr.io/$GCP_PROJECT_ID/$IMAGE_TAG .
+    - docker push gcr.io/$GCP_PROJECT_ID/$IMAGE_TAG
 
-run-image:
-  stage: run
-  script: 
-    - docker pull $DOCKER_IMAGE_NAME
-    - docker run -d --name=app -p=5000:5000 -t $DOCKER_IMAGE_NAME 
-    - docker ps
-    #- kubectl run --image=gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME} --port 5000
-    #- kubectl  expose deployment app --type=ClusterIP  
-  environment:
-    name: kubernetes-testing-cluster
-    kubernetes:
-        namespace: kubernetes-testing-cluster
-  artifacts:
-    paths:
-      - image
+deploy:
+  stage: deploy
+  image: google/cloud-sdk
+  script:
+    # GCloud authentication
+    - gcloud auth activate-service-account --key-file service_account.json
+    - gcloud auth configure-docker
+    - gcloud config set project $GCP_PROJECT_ID
+    - gcloud config set compute/zone $GCP_PRODUCTION_CLUSTER_ZONE
+    # Create cluster and get credentials for branch
+    - gcloud container clusters describe $GCP_PRODUCTION_CLUSTER_NAME &> /dev/null && echo cluster already created || gcloud container clusters create $GCP_PRODUCTION_CLUSTER_NAME --num-nodes=1
+    - gcloud container clusters get-credentials $GCP_PRODUCTION_CLUSTER_NAME
+    # Deploy app
+    - kubectl get deployments production-cluster &> /dev/null && kubectl set image deployment/$GCP_PRODUCTION_CLUSTER_NAME $IMAGE_BASE_TAG=gcr.io/$GCP_PROJECT_ID/$IMAGE_TAG || kubectl create deployment $GCP_PRODUCTION_CLUSTER_NAME --image=gcr.io/$GCP_PROJECT_ID/$IMAGE_TAG
+    - kubectl get pods
+    - kubectl get svc production-cluster &> /dev/null && echo already exposed || kubectl expose deployment $GCP_PRODUCTION_CLUSTER_NAME --type=LoadBalancer --port 80 --target-port 8080
+    - kubectl get service
+
