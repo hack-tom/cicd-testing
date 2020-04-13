@@ -11,8 +11,8 @@ RUN pip install -r /tmp/requirements.txt
 COPY ./app /app
 
 # entrypoint.sh
-COPY entrypoint.sh "~/local/bin"
-ENTRYPOINT ["~/local/bin/entrypoint.sh"]
+COPY entrypoint.sh "~/local/bin/"
+ENTRYPOINT ["entrypoint.sh"]
 RUN chmod +x "/local/bin/entrypoint.sh"
 
 # open port on the container
