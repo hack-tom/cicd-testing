@@ -48,8 +48,8 @@ deploy:
     - gcloud container clusters describe $GCP_PRODUCTION_CLUSTER_NAME &> /dev/null && echo cluster already created || gcloud container clusters create $GCP_PRODUCTION_CLUSTER_NAME --num-nodes=1
     - gcloud container clusters get-credentials $GCP_PRODUCTION_CLUSTER_NAME
     # Deploy app
-    - kubectl get deployments production-cluster &> /dev/null && kubectl set image deployment/$GCP_PRODUCTION_CLUSTER_NAME $IMAGE_BASE_TAG=gcr.io/$GCP_PROJECT_ID/$IMAGE_TAG || kubectl create deployment $GCP_PRODUCTION_CLUSTER_NAME --image=gcr.io/$GCP_PROJECT_ID/$IMAGE_TAG
+    - kubectl get deployments $GCP_PRODUCTION_CLUSTER_NAME &> /dev/null && kubectl set image deployment/$GCP_PRODUCTION_CLUSTER_NAME $IMAGE_BASE_TAG=gcr.io/$GCP_PROJECT_ID/$IMAGE_TAG || kubectl create deployment $GCP_PRODUCTION_CLUSTER_NAME --image=gcr.io/$GCP_PROJECT_ID/$IMAGE_TAG
     - kubectl get pods
-    - kubectl get svc production-cluster &> /dev/null && echo already exposed || kubectl expose deployment $GCP_PRODUCTION_CLUSTER_NAME --type=LoadBalancer --port 80 --target-port 8080
+    - kubectl get svc $GCP_PRODUCTION_CLUSTER_NAME &> /dev/null && echo already exposed || kubectl expose deployment $GCP_PRODUCTION_CLUSTER_NAME --type=LoadBalancer --port 80 --target-port 8080
     - kubectl get service
 
