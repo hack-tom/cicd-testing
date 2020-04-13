@@ -11,7 +11,7 @@ variables:
 stages:
 #  - test
   - build
-  - run
+  - deploy
 
 #tests:
 #  stage: test
