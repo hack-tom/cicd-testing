@@ -35,8 +35,9 @@ run-image:
   stage: run
   script: 
     - docker pull $DOCKER_IMAGE_NAME
-    - docker run --name=app --entrypoint="/bin/bash" -it -p=5000:5000 -t $DOCKER_IMAGE_NAME && docker exec app "export FLASK_APP=app && flask run"
+    - docker run --name=app --detatch -p=5000:5000 -t $DOCKER_IMAGE_NAME 
     - docker ps
+    - docker exec app "export FLASK_APP=app && flask run"
     #- kubectl run --image=gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME} --port 5000
     #- kubectl  expose deployment app --type=ClusterIP  
   environment:
