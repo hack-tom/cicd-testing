@@ -28,9 +28,9 @@ build:
   before_script:
     - echo $IMAGE_TAG
     - export DOCKER_HOST="tcp://docker:2375"
-    - cat service_account.json | docker login -u _json_key --password-stdin https://eu.gcr.io
+    - echo $GCLOUD_SERVICE_KEY | base64 --decode | docker login -u _json_key --password-stdin https://eu.gcr.io
   script:
-    - gcloud auth activate-service-account --key-file service_account.json
+    - echo $GCLOUD_SERVICE_KEY | base64 --decode | gcloud auth activate-service-account --key-file=-
     - gcloud auth configure-docker
     - docker build -t gcr.io/$GCP_PROJECT_ID/$IMAGE_TAG .
     - docker push gcr.io/$GCP_PROJECT_ID/$IMAGE_TAG
@@ -40,7 +40,7 @@ deploy:
   image: google/cloud-sdk
   script:
     # GCloud authentication
-    - gcloud auth activate-service-account --key-file service_account.json
+    - echo $GCLOUD_SERVICE_KEY | base64 --decode | gcloud auth activate-service-account --key-file=-
     - gcloud auth configure-docker
     - gcloud config set project $GCP_PROJECT_ID
     - gcloud config set compute/zone $GCP_PRODUCTION_CLUSTER_ZONE
