@@ -28,8 +28,8 @@ build:
   before_script:
     - echo $IMAGE_TAG
     - export DOCKER_HOST="tcp://docker:2375"
-    - echo my_cert=$(echo $GCLOUD_SERVICE_KEY | base64 --decode)
-    - echo service_key_file=cat service_account.json
+    - echo $(echo $GCLOUD_SERVICE_KEY | base64 --decode)
+    - cat service_account.json
     - echo $GCLOUD_SERVICE_KEY | base64 --decode | docker login -u _json_key --password-stdin https://eu.gcr.io
   script:
     - echo $GCLOUD_SERVICE_KEY | base64 --decode | gcloud auth activate-service-account --key-file=-
