@@ -1,10 +1,9 @@
 # When using dind, it's wise to use the overlayfs driver for
 # improved performance.
 variables:
-  DOCKER_DRIVER: overlay
-  GCP_PROJECT_ID: stoked-mode-274115
-  IMAGE_NAME: cicd-testing:latest
-  VERSION: v1.0
+  DOCKER_DRIVER: overlay2
+  DOCKER_HOST: tcp://docker:2375/
+  DOCKER_IMAGE_NAME: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$CI_COMMIT_SHORT_SHA
 
 image: docker:git
 
@@ -30,16 +29,16 @@ stages:
 build-image:
   stage: build
   script:
-    - docker build -t ${GCP_PROJECT_ID}/${IMAGE_NAME} .
-    - docker push ${GCP_PROJECT_ID}/${IMAGE_NAME}
+    - docker build -t $DOCKER_IMAGE_NAME .
+    - docker push $DOCKER_IMAGE_NAME
 
 run-image:
   stage: run
   script: 
-    - docker pull ${GCP_PROJECT_ID}/${IMAGE_NAME}
-    - docker run --entrypoint="/bin/bash" -d --expose=5000 ${GCP_PROJECT_ID}/${IMAGE_NAME}
+    - docker pull $DOCKER_IMAGE_NAME
+    - docker run --entrypoint="/bin/bash" -d --expose=5000 $DOCKER_IMAGE_NAME
     - docker ps
-    - docker exec ${GCP_PROJECT_ID}/${IMAGE_NAME} "export FLASK_APP=app && flask run"
+    - docker exec $DOCKER_IMAGE_NAME "export FLASK_APP=app && flask run"
     #- kubectl run --image=gcr.io/${GCP_PROJECT_ID}/${IMAGE_NAME} --port 5000
     #- kubectl  expose deployment app --type=ClusterIP  
   environment:
