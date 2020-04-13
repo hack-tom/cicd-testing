@@ -15,7 +15,7 @@ services:
  
 stages:
 #  - test
-#  - build
+  - build
   - run
 
 #tests:
@@ -25,11 +25,11 @@ stages:
 #  tags:
 #    - docker
 
-#build-image:
- # stage: build
-  #script:
-   # - docker build -t $DOCKER_IMAGE_NAME .
-    #- docker push $DOCKER_IMAGE_NAME
+build-image:
+  stage: build
+  script:
+    - docker build -t $DOCKER_IMAGE_NAME .
+    - docker push $DOCKER_IMAGE_NAME
 
 run-image:
   stage: run
