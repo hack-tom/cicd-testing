@@ -12,8 +12,8 @@ COPY ./app /app
 
 # entrypoint.sh
 COPY entrypoint.sh /usr/local/bin/
-ENTRYPOINT ["./entrypoint.sh"]
-RUN chmod +x entrypoint.sh
+ENTRYPOINT ["./usr/local/bin/entrypoint.sh"]
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # open port on the container
 EXPOSE 5000
