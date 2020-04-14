@@ -1,6 +1,5 @@
 from flask import Flask,json,jsonify
 import requests
-import index.html as index
 
 app = Flask(__name__)
 
@@ -24,7 +23,27 @@ def getdata(options):
     return "Error"
 @app.route("/")
 def welcome():
-    return index
+    return """
+
+    
+                )           \       /          (
+               /|\          ) \___/ (         /|\
+             /  |  \       ( /\   /\ )      /  |  \
+           /    |    \      \ ` | ' /     /    |    \
+    +----/------|-----O-------\ |-/------O-----|------\-------+
+    |                 '^`       V      '^`                    |
+    |   A demonstration of GitLab CICD with Google Cloud      |
+    |    Platform Kubernetes deployment, by Tom Atkins.       |
+    |                                                         |
+    +---------------------------------------------------------+
+      l    / \     /         \\             \     / \    l
+      l  /     \ /            ))              \ /     \  l
+       I/       V            //                V       \I
+                             V
+
+
+
+    """
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True, port=8080)
