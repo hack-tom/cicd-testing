@@ -1,5 +1,6 @@
 from flask import Flask,json,jsonify
 import requests
+import index.html as index
 
 app = Flask(__name__)
 
@@ -23,7 +24,7 @@ def getdata(options):
     return "Error"
 @app.route("/")
 def welcome():
-    return "welcome to dataservice"
+    return index
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True, port=8080)
