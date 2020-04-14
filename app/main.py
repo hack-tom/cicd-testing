@@ -23,8 +23,7 @@ def getdata(options):
     return "Error"
 @app.route("/")
 def welcome():
-    return """
-    <!DOCTYPE=html">
+    dragon= """    <!DOCTYPE=html">
     <head>
     <title> Tom Atkins </title>
     </head>
@@ -49,8 +48,10 @@ def welcome():
 
     
     </pre>
-    </head>
+    </body>
+
     """
+    return dragon
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True, port=8080)
