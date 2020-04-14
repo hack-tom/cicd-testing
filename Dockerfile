@@ -14,4 +14,4 @@ COPY ./app /app
 EXPOSE 8080
 
 # run app
-CMD ["cd", "app" "&&", "export", "FLASK_APP=main.py", "&&", "flask", "run"]
+CMD ["export", "FLASK_APP=main", "&&", "flask", "run"]
