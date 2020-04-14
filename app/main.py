@@ -24,6 +24,12 @@ def getdata(options):
 @app.route("/")
 def welcome():
     return """
+    <!DOCTYPE=html">
+    <head>
+    <title> Tom Atkins </title>
+    </head>
+    <body>
+    <pre>
 
     
                 )           \       /          (
@@ -41,8 +47,9 @@ def welcome():
        I/       V            //                V       \I
                              V
 
-
-
+    
+    </pre>
+    </head>
     """
 
 if __name__ == "__main__":
