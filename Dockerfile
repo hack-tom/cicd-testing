@@ -18,4 +18,4 @@ EXPOSE 8080
 ENTRYPOINT [ "python" ]
 
 # run app
-CMD [ "app.py" ]
+CMD [ "main.py" ]
