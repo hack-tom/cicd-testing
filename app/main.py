@@ -23,24 +23,9 @@ def getdata(options):
     return "Error"
 @app.route("/")
 def welcome():
-    dragon= """
-    
-                )           \       /          (
-               /|\          ) \___/ (         /|\
-             /  |  \       ( /\   /\ )      /  |  \
-           /    |    \      \ ` | ' /     /    |    \
-    +----/------|-----O-------\ |-/------O-----|------\-------+
-    |                 '^`       V      '^`                    |
-    |   A demonstration of GitLab CICD with Google Cloud      |
-    |    Platform Kubernetes deployment, by Tom Atkins.       |
-    |                                                         |
-    +---------------------------------------------------------+
-      l    / \     /         \\             \     / \    l
-      l  /     \ /            ))              \ /     \  l
-       I/       V            //                V       \I
-                             V
-
-    """
+    f= open("dragon.txt","r")
+    dragon = f.read()
+    f.close()
     return dragon
 
 if __name__ == "__main__":
