@@ -23,10 +23,29 @@ def getdata(options):
     return "Error"
 @app.route("/")
 def welcome():
-    f= open("dragon.txt","r")
-    dragon = f.read()
-    f.close()
-    return dragon
-
+    return """
+    <!DOCTYPE=html">
+    <head>
+    <title> Tom Atkins </title>
+    </head>
+    <body>
+    <pre>
+            )           \       /          (
+           /|\          ) \___/ (         /|\
+         /  |  \       ( /\   /\ )      /  |  \
+       /    |    \      \ ` | ' /     /    |    \
++----/------|-----O-------\ |-/------O-----|------\-------+
+|                 '^`       V      '^`                    |
+|   A demonstration of GitLab CICD with Google Cloud      |
+|    Platform Kubernetes deployment, by Tom Atkins.       |
+|                                                         |
++---------------------------------------------------------+
+  l    / \     /         \\             \     / \    l
+  l  /     \ /            ))              \ /     \  l
+   I/       V            //                V       \I
+                         V
+    </pre>
+    </body>
+    """
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True, port=8080)
