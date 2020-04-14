@@ -11,10 +11,10 @@ RUN pip install -r /tmp/requirements.txt
 COPY ./app /app
 WORKDIR /app
 
-# open port on the container
+# expose port
 EXPOSE 8080
 
-#entrypoint
+# entrypoint
 ENTRYPOINT [ "python" ]
 
 # run app
