@@ -23,13 +23,7 @@ def getdata(options):
     return "Error"
 @app.route("/")
 def welcome():
-    dragon= """    <!DOCTYPE=html">
-    <head>
-    <title> Tom Atkins </title>
-    </head>
-    <body>
-    <pre>
-
+    dragon= """
     
                 )           \       /          (
                /|\          ) \___/ (         /|\
@@ -45,10 +39,6 @@ def welcome():
       l  /     \ /            ))              \ /     \  l
        I/       V            //                V       \I
                              V
-
-    
-    </pre>
-    </body>
 
     """
     return dragon
