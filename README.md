@@ -10,4 +10,4 @@ This project is for testing of the following concepts:
 
 ## Note
 
-When this repo is opened in gitlab, with the environment variables and Google Cloud Platform settings properly configured, the pipeline successfully deploys the flask app to a Google Kubernetes Engine cluster.
+When this repo is opened in gitlab with the environment variables and Google Cloud Platform settings properly configured, the pipeline successfully deploys the flask app to a Google Kubernetes Engine cluster via GitLabs' .gitlab-ci autoDevOps function.
