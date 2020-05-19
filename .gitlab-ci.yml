@@ -9,16 +9,16 @@ variables:
   GCP_PRODUCTION_CLUSTER_NAME: $CI_PROJECT_TITLE-$CI_COMMIT_REF_SLUG
 
 stages:
-  - test
+#  - test
   - build
   - deploy
 
-tests:
-  stage: test
-  script:
-    - python test.py
-  tags:
-    - docker
+#tests:
+#  stage: test
+#  script:
+#    - python test.py
+#  tags:
+#    - docker
 
 build:
   stage: build
